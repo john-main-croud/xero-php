@@ -2,6 +2,7 @@
 namespace XeroPHP\Models\Accounting;
 
 use XeroPHP\Remote;
+use XeroPHP\Models\Accounting\TrackingCategory\TrackingOption;
 
 class TrackingCategory extends Remote\Object
 {
@@ -106,7 +107,8 @@ class TrackingCategory extends Remote\Object
             'TrackingCategoryID' => [false, self::PROPERTY_TYPE_STRING, null, false, false],
             'Name' => [false, self::PROPERTY_TYPE_STRING, null, false, false],
             'Status' => [false, self::PROPERTY_TYPE_STRING, null, false, false],
-            'Option' => [false, self::PROPERTY_TYPE_STRING, null, false, false]
+            'Option' => [false, self::PROPERTY_TYPE_STRING, null, false, false],
+            'Options' => [false, self::PROPERTY_TYPE_OBJECT, 'Accounting\\TrackingCategory\\TrackingOption', true, true]
         ];
     }
 
@@ -156,25 +158,6 @@ class TrackingCategory extends Remote\Object
     /**
      * @return string
      */
-    public function getOption()
-    {
-        return $this->_data['Option'];
-    }
-
-    /**
-     * @param string $value
-     * @return TrackingCategory
-     */
-    public function setOption($value)
-    {
-        $this->propertyUpdated('Option', $value);
-        $this->_data['Option'] = $value;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
     public function getStatus()
     {
         return $this->_data['Status'];
@@ -188,6 +171,48 @@ class TrackingCategory extends Remote\Object
     {
         $this->propertyUpdated('Status', $value);
         $this->_data['Status'] = $value;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOption()
+    {
+        return $this->_data['Option'];
+    }
+
+    /**
+     * @param string $value
+     * @return TrackingCategory
+     */
+    public function setOption($value)
+    {
+        $this->propertyUpdated('Option', $value);
+        $this->_data['Name'] = $value;
+        return $this;
+    }
+
+    /**
+     * @return TrackingOption[]|Remote\Collection
+     * Always returns a collection, switch is for type hinting
+     */
+    public function getOptions()
+    {
+        return $this->_data['Options'];
+    }
+
+    /**
+     * @param TrackingOption $value
+     * @return TrackingCategory
+     */
+    public function addOption(TrackingOption $value)
+    {
+        $this->propertyUpdated('Options', $value);
+        if (!isset($this->_data['Options'])) {
+            $this->_data['Options'] = new Remote\Collection();
+        }
+        $this->_data['Options'][] = $value;
         return $this;
     }
 }
