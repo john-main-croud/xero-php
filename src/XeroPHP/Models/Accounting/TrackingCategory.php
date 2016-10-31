@@ -189,7 +189,7 @@ class TrackingCategory extends Remote\Object
     public function setOption($value)
     {
         $this->propertyUpdated('Option', $value);
-        $this->_data['Name'] = $value;
+        $this->_data['Option'] = $value;
         return $this;
     }
 
