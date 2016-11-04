@@ -114,7 +114,7 @@ abstract class Application
      */
     public function setConfig($key, $value)
     {
-        return $this->config[$key] = $value;
+        array_set($this->config, $key, $value);
     }
 
     /**
